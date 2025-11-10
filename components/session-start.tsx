@@ -143,7 +143,7 @@ export function SessionStart({
               <Button
                 size="lg"
                 onClick={onStartSession}
-                className="h-24 px-20 text-2xl font-display font-bold rounded-[32px] bg-gradient-to-br from-primary to-primary/90 hover:from-primary/95 hover:to-primary/85 text-primary-foreground transition-all duration-300 touch-manipulation relative overflow-hidden preserve-3d shadow-3d-lg hover:shadow-3d-xl button-shine-effect group"
+                className="h-24 md:px-20 w-full text-2xl font-display font-bold rounded-[32px] bg-gradient-to-br from-primary to-primary/90 hover:from-primary/95 hover:to-primary/85 text-primary-foreground transition-all duration-300 touch-manipulation relative overflow-hidden preserve-3d shadow-3d-lg hover:shadow-3d-xl button-shine-effect group"
               >
                 <motion.div
                   className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0"

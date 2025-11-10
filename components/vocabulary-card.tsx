@@ -472,8 +472,8 @@ export function VocabularyCard({
                         damping: 24,
                       }}
                     >
-                      <Card className="p-10 rounded-[36px] border border-border/30 relative overflow-hidden preserve-3d shadow-3d-md premium-glass">
-                        <p className="text-sm font-bold text-muted-foreground mb-5 uppercase tracking-wider relative z-10">
+                      <Card className="p-6 rounded-[36px] border border-border/30 relative overflow-hidden preserve-3d shadow-3d-md premium-glass">
+                        <p className="text-sm font-bold text-muted-foreground  uppercase tracking-wider relative z-10">
                           Example Usage
                         </p>
                         {isLoadingExample ? (
@@ -563,8 +563,10 @@ export function VocabularyCard({
                   animate={{ scale: 2, opacity: 0 }}
                   transition={{
                     duration: 2.2,
-                    repeat: Number.POSITIVE_INFINITY,
-                    ease: "easeInOut",
+                    repeat: Infinity,
+                    repeatDelay: 1,
+                    ease: "easeOut",
+                    delay,
                   }}
                 />
               ))}

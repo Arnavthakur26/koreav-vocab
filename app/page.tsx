@@ -1,19 +1,21 @@
-"use client"
+"use client";
 
-import { VocabularyCard } from "@/components/vocabulary-card"
-import { LevelSelector } from "@/components/level-selector"
-import { SessionStart } from "@/components/session-start"
-import { SessionStatsComponent } from "@/components/session-stats"
-import { ThemeToggle } from "@/components/theme-toggle"
-import { useState } from "react"
-import { motion, AnimatePresence } from "framer-motion"
-import type { SessionStats } from "@/types/session"
+import { VocabularyCard } from "@/components/vocabulary-card";
+import { LevelSelector } from "@/components/level-selector";
+import { SessionStart } from "@/components/session-start";
+import { SessionStatsComponent } from "@/components/session-stats";
+import { ThemeToggle } from "@/components/theme-toggle";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import type { SessionStats } from "@/types/session";
 
-type AppState = "start" | "session" | "stats"
+type AppState = "start" | "session" | "stats";
 
 export default function Home() {
-  const [selectedLevel, setSelectedLevel] = useState<"topik1" | "topik2">("topik1")
-  const [appState, setAppState] = useState<AppState>("start")
+  const [selectedLevel, setSelectedLevel] = useState<"topik1" | "topik2">(
+    "topik1"
+  );
+  const [appState, setAppState] = useState<AppState>("start");
   const [sessionStats, setSessionStats] = useState<SessionStats>({
     correct: 0,
     incorrect: 0,
@@ -21,7 +23,7 @@ export default function Home() {
     accuracy: 0,
     wordsReviewed: [],
     startTime: 0,
-  })
+  });
 
   const handleStartSession = () => {
     setSessionStats({
@@ -31,24 +33,25 @@ export default function Home() {
       accuracy: 0,
       wordsReviewed: [],
       startTime: Date.now(),
-    })
-    setAppState("session")
-  }
+    });
+    setAppState("session");
+  };
 
   const handleEndSession = (stats: SessionStats) => {
-    const endTime = Date.now()
+    const endTime = Date.now();
     const finalStats: SessionStats = {
       ...stats,
       endTime,
       duration: endTime - stats.startTime,
-    }
-    setSessionStats(finalStats)
-    setAppState("stats")
-  }
+    };
+    setSessionStats(finalStats);
+    setAppState("stats");
+  };
 
   const handleNewSession = () => {
-    setAppState("start")
-  }
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    setAppState("start");
+  };
 
   return (
     <main className="min-h-screen bg-background">
@@ -61,11 +64,18 @@ export default function Home() {
               className="flex items-center gap-3"
             >
               <div className="w-11 h-11 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center">
-                <span className="text-xl font-display font-bold text-primary">韓</span>
+                <span className="text-xl font-display font-bold text-primary">
+                  韓
+                </span>
               </div>
-              <h1 className="text-xl font-display font-bold text-foreground">Korean Vocab</h1>
+              <h1 className="text-xl font-display font-bold text-foreground">
+                Korean Vocab
+              </h1>
             </motion.div>
-            <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }}>
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+            >
               <ThemeToggle />
             </motion.div>
           </div>
@@ -89,9 +99,15 @@ export default function Home() {
                 transition={{ delay: 0.1 }}
                 className="flex justify-center pt-4 pb-4"
               >
-                <LevelSelector selectedLevel={selectedLevel} onLevelChange={setSelectedLevel} />
+                <LevelSelector
+                  selectedLevel={selectedLevel}
+                  onLevelChange={setSelectedLevel}
+                />
               </motion.div>
-              <SessionStart onStartSession={handleStartSession} selectedLevel={selectedLevel} />
+              <SessionStart
+                onStartSession={handleStartSession}
+                selectedLevel={selectedLevel}
+              />
             </motion.div>
           )}
 
@@ -120,11 +136,14 @@ export default function Home() {
               exit={{ opacity: 0 }}
               transition={{ duration: 0.3 }}
             >
-              <SessionStatsComponent stats={sessionStats} onNewSession={handleNewSession} />
+              <SessionStatsComponent
+                stats={sessionStats}
+                onNewSession={handleNewSession}
+              />
             </motion.div>
           )}
         </AnimatePresence>
       </div>
     </main>
-  )
+  );
 }
