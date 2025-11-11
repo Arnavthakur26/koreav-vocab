@@ -14,6 +14,7 @@ import {
   type VocabularyWord,
 } from "@/lib/vocabulary-data";
 import type { SessionStats } from "@/types/session";
+import BlurText from "./ui/BlurText";
 
 type QuizState = "question" | "answered";
 
@@ -295,7 +296,13 @@ export function VocabularyCard({
                       whileHover={{ scale: 1.02 }}
                       transition={{ duration: 0.2 }}
                     >
-                      {currentWord.korean}
+                      <BlurText
+                        text={currentWord.korean}
+                        delay={150}
+                        animateBy="letters"
+                        direction="bottom"
+                        className="items-center justify-center"
+                      />
                     </motion.span>
                   </motion.div>
                   {currentWord.romanization && quizState === "answered" && (
