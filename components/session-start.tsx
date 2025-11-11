@@ -95,8 +95,7 @@ export function SessionStart({
                 ))}
               </motion.div>
             </motion.div>
-
-            <div className="space-y-5">
+            <div className="space-y-4 mt-6">
               <motion.h2
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -106,7 +105,7 @@ export function SessionStart({
                   stiffness: 200,
                   damping: 24,
                 }}
-                className="text-6xl md:text-7xl font-display font-bold text-foreground preserve-3d layer-2"
+                className="text-4xl md:text-5xl font-display font-bold text-foreground preserve-3d layer-2"
                 style={{
                   textShadow:
                     "0 6px 16px rgba(0, 0, 0, 0.08), 0 3px 8px rgba(0, 0, 0, 0.06)",
@@ -119,7 +118,7 @@ export function SessionStart({
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.4 }}
-                className="text-2xl text-muted-foreground"
+                className="text-lg md:text-xl text-muted-foreground"
               >
                 {selectedLevel === "topik1"
                   ? "TOPIK 1 - Beginner Level"

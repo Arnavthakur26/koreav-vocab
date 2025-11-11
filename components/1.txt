@@ -1,0 +1,244 @@
+PROMPT FOR V0:
+
+Create a sophisticated mobile-first vocabulary practice web app for Korean learning with award-winning 3D design and effortless elegant,premium and seamless animations.
+
+CORE FUNCTIONALITY:
+
+   Three screens: Session Start → Quiz Cards → Session Statistics
+   Quiz mechanic: Display a Korean word with 4 multiple-choice translations, reveal if correct/incorrect with visual feedback, then show the correct translation with an AI-generated example sentence
+   Session tracking: Start session button, track correct/incorrect answers, end session button, then display detailed analytics
+   Multiple difficulty levels: TOPIK 1 & 2 with separate word lists (20 words each)
+   Fixed floating "Next Word" button that stays at bottom-right of screen viewport (never requires scrolling)
+   Score counter in header showing current progress (e.g., "5/10")
+
+DESIGN SYSTEM:
+
+Typography:
+
+   Headings: Space Grotesk (bold, 600-700 weight, tight letter spacing)
+   Body: Inter (400-500 weight, relaxed line height 1.6)
+   Korean words: Display at 48-64px with bold weight
+   Romanization: 14px muted color below main word
+   Smooth font rendering with -webkit-font-smoothing: antialiased
+
+Spacing & Layout:
+
+   Mobile-first design optimized for phone screens
+   Generous padding (24-32px) on all cards
+   Rounded corners: rounded-3xl (24px) on all cards and buttons
+   Use flexbox for layouts with gap utilities
+   Bento grid layouts on start and stats screens with varying card sizes
+
+3D DESIGN ELEMENTS:
+
+Card Effects:
+   Multi-layered shadows for dramatic depth:
+   Cards have subtle 3D tilt on hover/tap (rotateX: 2deg, rotateY: 3deg)
+   Glassmorphism: backdrop-blur-xl with 90% opacity white background
+with 3d textures in background
+   Subtle gradient overlays from edges to center
+   Clear separation from background.
+
+Background Elements:
+
+   3-4 large floating orbs in background with:
+       Gradient fills (purple to blue)
+       Continuous rotation (20-40s duration)
+       Blur effect (blur-3xl)
+       Slow floating motion with different speeds
+       Very subtle opacity (0.05-0.15) to avoid distraction
+       Different sizes (200-400px)
+
+Decorative Textures:
+
+   Subtle geometric glyphs in card corners (circles, squares, triangles inspired by Korean traditional patterns)
+   Glyphs fade from corners toward center (opacity-10 to opacity-0)
+   Gentle rotation animation on glyphs (360deg over 20s)
+   SVG patterns with stroke-only style, no fill
+
+ANIMATIONS & MICRO-INTERACTIONS:
+
+Global Animation Principles:
+
+   Use Framer Motion for all animations
+   Spring physics: { type: "spring", stiffness: 300, damping: 30 }
+   Stagger children animations by 0.1s for sequential reveals
+   All transforms use transform-gpu for hardware acceleration
+   Smooth easing: ease-out for entrances, ease-in-out for movements
+
+Button Interactions:
+
+   Option buttons: Quick ripple wave (expanding circle) + horizontal shimmer sweep on tap (350ms total)
+   Correct answer: Green glow with pulsing ring, scale to 1.05, rotate slightly
+   Wrong answer: Red glow with shake animation (-5deg to 5deg)
+   Hover/Active states: Scale 1.05, lift shadow, brighten colors
+   Text turns white on hover/active for all interactive buttons
+   All buttons have pulsing ambient glow rings
+
+Screen Transitions:
+
+   Cards fade in with spring animation from translateY: 50px
+   Elements stagger in sequentially (0.1s delays)
+   Exit animations: fade out with scale 0.95
+   Smooth cross-fade between screens (300ms)
+
+Micro-Animations:
+
+   Icons gently float and rotate continuously
+   Text reveals with slight fade-up motion
+   Score counter animates when numbers change (spring scale)
+   Success/celebration: Trophy bounces with floating sparkle particles
+   Statistics cards pop in with spring scale and rotate effects
+   Floating particles around interactive elements (very subtle, 3px size, slow drift)
+
+COMPONENT STRUCTURE:
+
+Session Start Screen:
+
+   Large hero section with app title in Korean character
+   Subtitle explaining purpose
+   Bento grid below with:
+       Large "Start Session" button (full width or prominent)
+       Smaller info cards showing features or tips (2x2 grid)
+       Cards vary in size for visual interest
+   Level selector (tab-style) at top to choose difficulty
+   Theme toggle button (sun/moon icon) in header
+   Decorative floating elements in background
+
+Vocabulary Quiz Card:
+
+   Top header: Score (left), End Session button (right)
+   Main card floating in center with:
+       Korean word (large, centered, bold)
+       Romanization below (small, muted)
+       4 option buttons in 2x2 grid with generous spacing
+       After answering: Correct/incorrect feedback banner, then reveal section with:
+           Correct translation (18px, bold)
+           Example sentence section with AI loader (elegant SVG path animation - rotating book with sparkles, 2s duration)
+           Example sentence appears after loader completes
+   Fixed floating "Next Word" button at bottom-right of viewport:
+       Circular button (56px diameter)
+       Animated SVG arrow that draws in
+       Pulsing ring effect
+       Only appears after answering
+       Uses fixed positioning (fixed bottom-8 right-8 z-50)
+
+Session Statistics Screen:
+
+   Celebratory header with bouncing animated trophy icon
+   Large score display (correct/total) with gradient background
+   Floating sparkle particles bursting from trophy
+   Bento grid of stat cards:
+       Accuracy percentage (large card)
+       Correct count (medium card with green accent)
+       Incorrect count (medium card with red accent)
+       Time or other metrics (smaller cards)
+   "Start New Session" button at bottom
+   Each stat card has 3D pop-in animation with rotation
+
+TECHNICAL IMPLEMENTATION:
+
+Tech Stack:
+
+   Next.js 16 with App Router
+   React 19
+   TypeScript
+   Tailwind CSS v4 (configured in globals.css @theme)
+   Framer Motion for animations
+   shadcn/ui components (Button, Card) OR HeroUI(NextUI) for better animated components- your choice
+   Lucide React for icons
+
+Key Files Structure:
+
+    app/
+      page.tsx (main app with state management)
+      layout.tsx (fonts: Inter + Space Grotesk)
+      globals.css (design tokens, 3D styles, animations)
+    components/
+      session-start.tsx (start screen with bento grid)
+      vocabulary-card.tsx (main quiz component)
+      session-stats.tsx (analytics with 3D animations)
+      level-selector.tsx (TOPIK level tabs)
+      theme-toggle.tsx (dark mode switch)
+      example-loader.tsx (AI loading animation)
+    lib/
+      vocabulary-data.ts (word lists for both levels)
+    types/
+      session.ts (TypeScript interfaces)
+    
+
+State Management:
+
+   useState for screen state ('start' | 'session' | 'stats')
+   Track sessionData: correct answers, incorrect answers, total questions
+   Track current word index, selected answer, show result state
+   Level selection state 
+
+Example Sentence API:
+
+   Create fake loader that simulates 2s delay
+   Placeholder for future Gemini API integration
+   Shows elegant SVG path animation (rotating book icon with sparkles)
+   Example appears after loader completes
+
+Mobile Optimizations:
+
+   touch-action: manipulation on all buttons
+   Larger tap targets (min 44x44px)
+   No hover-dependent interactions
+   PWA manifest for home screen installation
+   Viewport meta tags preventing zoom
+   Hardware-accelerated transforms (transform-gpu)
+   Reduced motion support with prefers-reduced-motion
+
+DARK MODE:
+
+   Toggle in header (sun/moon icon)
+   Stored in localStorage
+   Dark backgrounds: Deep charcoal with subtle purple tint
+   Cards: Dark with purple-blue gradient overlays
+   Text: Soft white with good contrast
+   Floating orbs: More vibrant in dark mode
+   All shadows adjusted for dark backgrounds
+
+KEY DESIGN DETAILS TO NOT MISS:
+
+1.  Elements must have continuous animations at all times but they should be elegant and subtle not too flashy or distracting
+2.  Multi-layered shadows (3 layers) for dramatic 3D depth
+3.  Subtle glyphs in corners fading to center inspired by Korean traditional patterns
+4.  Fixed next button at viewport bottom-right (never inside scrolling content)
+5.  Very subtle background orbs (opacity 0.05-0.15) to avoid distraction
+6.  Button animations complete quickly (350ms) for seamless flow
+7.  Celebratory sparkles and particles on stats screen for motivation
+8.  Glassmorphism effect on all floating cards
+9.  Spring physics on all animations for natural feel
+10.  Stagger animations for sequential element reveals
+11.  Text turns white on button hover/active states
+12.  Trophy bounces and sparkles on stats screen
+13.  Example loader is elegant SVG path animation (book + sparkles)
+14.  Score counter in header, not embedded in card
+15. All SVGs are subtly animated:
+16. No animation is too flashy or distracting. Should be - effortlessly elegant and premium 
+17. What I want from the Color palette:
+    1.Premium 2.Mature 3.Simplistic 4.Elegant 5.Modern
+18.  since I will be mainly using the app as a webapp on a mobile, add animations that can be seen on mobiles.For example - animations on svgs, and animations on clicks/taps since hover animation do not play in mobiles. Also prepare this app as a progressive webapp, so prepare a manifest.json
+
+IMPORTANT!!! : Prioritize dark mode, minimalism inspired by asian(Korean) culture, effortless elegance
+
+WORD LIST STRUCTURE: Create multiple arrays in lib/vocabulary-data.ts for each difficulty:
+
+
+
+Each word object: { word: string, translation: string, romanization: string }
+
+FINAL POLISH:
+
+   Every element should have some subtle animation or micro-interaction
+   The app should feel alive, encouraging, and motivating to use
+   Visual feedback for all actions (clicks, correct/wrong answers, session complete)
+   Clean, minimalistic aesthetic despite rich 3D effects
+   Optimized for daily mobile practice sessions
+   Balance between exciting visuals and non-distracting learning environment
+
+  
+
