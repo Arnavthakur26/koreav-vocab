@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Check, X, Flag } from "lucide-react";
+import { Check, X, Flag, ArrowRight } from "lucide-react";
 import { ExampleLoader } from "@/components/example-loader";
 import {
   topik1Words,
@@ -15,6 +15,7 @@ import {
 } from "@/lib/vocabulary-data";
 import type { SessionStats } from "@/types/session";
 import BlurText from "./ui/BlurText";
+import { ShineBorder } from "@/components/ui/shine-border";
 
 type QuizState = "question" | "answered";
 
@@ -224,7 +225,6 @@ export function VocabularyCard({
           >
             <Card className="relative p-6 md:p-10 rounded-[32px] border-2 border-border/30 backdrop-blur-xl overflow-hidden preserve-3d shadow-3d-xl premium-glass-elevated bg-card/90">
               <div className="absolute inset-0 korean-pattern-overlay rounded-[32px] pointer-events-none opacity-30" />
-
               <motion.div
                 className="absolute inset-0 rounded-[32px]"
                 style={{
@@ -570,7 +570,7 @@ export function VocabularyCard({
             }}
             whileTap={{ scale: 0.9 }}
             onClick={handleNext}
-            className="fixed bottom-6 right-6 w-20 h-20 rounded-full bg-gradient-to-br from-primary via-primary to-primary/90 text-primary-foreground flex items-center justify-center touch-manipulation group z-50 preserve-3d shadow-3d-xl"
+            className="fixed bottom-6 right-6 size-16 gold-shine embossed rounded-full bg-gradient-to-br from-primary via-primary to-primary/90 text-primary-foreground flex items-center justify-center touch-manipulation group z-50 preserve-3d shadow-3d-xl"
             style={{
               boxShadow:
                 "0 16px 40px rgba(0, 0, 0, 0.25), 0 0 60px rgba(var(--primary), 0.3)",
@@ -578,57 +578,26 @@ export function VocabularyCard({
             aria-label="Next word"
           >
             <motion.div
-              className="absolute inset-0 rounded-full"
-              animate={{
-                boxShadow: [
-                  "0 0 30px rgba(var(--primary), 0.4), 0 0 60px rgba(var(--primary), 0.2)",
-                  "0 0 45px rgba(var(--primary), 0.6), 0 0 90px rgba(var(--primary), 0.3)",
-                  "0 0 30px rgba(var(--primary), 0.4), 0 0 60px rgba(var(--primary), 0.2)",
-                ],
-              }}
+              animate={{ x: [0, 3, 0] }}
               transition={{
-                duration: 2,
+                duration: 1,
                 repeat: Number.POSITIVE_INFINITY,
                 ease: "easeInOut",
               }}
-            />
-            <svg
-              width="36"
-              height="36"
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-              className="relative z-10"
             >
-              <motion.path
-                d="M5 12H19M19 12L12 5M19 12L12 19"
-                stroke="currentColor"
-                strokeWidth="2.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                initial={{ pathLength: 0, opacity: 0 }}
-                animate={{ pathLength: 1, opacity: 1 }}
-                transition={{
-                  duration: 0.8,
-                  ease: "easeInOut",
-                  delay: 0.2,
-                }}
-              />
-            </svg>
-            {[0, 0.6, 1.2].map((delay) => (
-              <motion.div
-                key={delay}
-                className="absolute inset-0 rounded-full border-2 border-white/30"
-                initial={{ scale: 1, opacity: 0.6 }}
-                animate={{ scale: 2, opacity: 0 }}
-                transition={{
-                  duration: 2.2,
-                  repeat: Number.POSITIVE_INFINITY,
-                  ease: "easeOut",
-                  delay,
-                }}
-              />
-            ))}
+              <ArrowRight className="w-7 h-7" />
+            </motion.div>
+
+            {/* Pulse ring for attention on mobile */}
+            <motion.div
+              className="absolute inset-0 rounded-full border-2 border-primary"
+              animate={{ scale: [1, 1.3, 1], opacity: [0.5, 0, 0.5] }}
+              transition={{
+                duration: 2,
+                repeat: Number.POSITIVE_INFINITY,
+                ease: "easeOut",
+              }}
+            />
           </motion.button>
         )}
       </AnimatePresence>

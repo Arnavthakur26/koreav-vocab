@@ -1,72 +1,73 @@
-"use client"
+"use client";
 
-import { motion } from "framer-motion"
-import { useEffect, useState } from "react"
+import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
 
 interface Particle {
-  id: number
-  x: number
-  y: number
-  angle: number
-  delay: number
-  size: number
+  id: number;
+  x: number;
+  y: number;
+  angle: number;
+  delay: number;
+  size: number;
+  color: string;
 }
 
 interface SparklesProps {
-  trigger: boolean
-  color?: string
+  trigger: boolean;
+  palette?: string[];
 }
 
-export function Sparkles({ trigger, color = "#a78bfa" }: SparklesProps) {
-  const [particles, setParticles] = useState<Particle[]>([])
+export function Sparkles({
+  trigger,
+  palette = ["#a78bfa", "#7c3aed", "#60a5fa", "#34d399"],
+}: SparklesProps) {
+  const [particles, setParticles] = useState<Particle[]>([]);
 
   useEffect(() => {
     if (trigger) {
-      const newParticles: Particle[] = Array.from({ length: 16 }, (_, i) => ({
-        id: Date.now() + i,
+      const now = Date.now();
+      const newParticles: Particle[] = Array.from({ length: 14 }, (_, i) => ({
+        id: now + i,
         x: 0,
         y: 0,
-        angle: (i * 360) / 16,
-        delay: i * 0.015,
-        size: Math.random() * 8 + 3,
-      }))
-      setParticles(newParticles)
-
-      setTimeout(() => setParticles([]), 900)
+        angle: (i * 360) / 14 + Math.random() * 12,
+        delay: i * 0.02,
+        size: Math.random() * 8 + 4,
+        color: palette[Math.floor(Math.random() * palette.length)],
+      }));
+      setParticles(newParticles);
+      const t = setTimeout(() => setParticles([]), 900);
+      return () => clearTimeout(t);
     }
-  }, [trigger])
+  }, [trigger, palette]);
 
   return (
     <div className="absolute inset-0 pointer-events-none overflow-visible">
-      {particles.map((particle) => (
+      {particles.map((p) => (
         <motion.div
-          key={particle.id}
+          key={p.id}
           className="absolute top-1/2 left-1/2 rounded-full"
           style={{
-            width: particle.size,
-            height: particle.size,
-            backgroundColor: color,
-            boxShadow: `0 0 ${particle.size * 3}px ${color}`,
+            width: p.size,
+            height: p.size,
+            backgroundColor: p.color,
+            boxShadow: `0 0 ${p.size * 3}px ${p.color}`,
           }}
-          initial={{
-            x: 0,
-            y: 0,
-            scale: 0,
-            opacity: 1,
-          }}
+          initial={{ x: 0, y: 0, scale: 0, opacity: 1 }}
           animate={{
-            x: Math.cos((particle.angle * Math.PI) / 180) * 80,
-            y: Math.sin((particle.angle * Math.PI) / 180) * 80,
-            scale: [0, 1.2, 0],
+            x: Math.cos((p.angle * Math.PI) / 180) * 72,
+            y: Math.sin((p.angle * Math.PI) / 180) * 72,
+            scale: [0, 1.1, 0],
             opacity: [0, 1, 0],
           }}
           transition={{
-            duration: 0.7,
-            delay: particle.delay,
+            duration: 0.72,
+            delay: p.delay,
             ease: [0.34, 1.56, 0.64, 1],
           }}
         />
       ))}
     </div>
-  )
+  );
 }

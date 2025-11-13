@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { BookOpen, Target, TrendingUp, Sparkles } from "lucide-react";
+import { ShineBorder } from "./ui/shine-border";
 
 interface SessionStartProps {
   onStartSession: () => void;
